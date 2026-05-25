@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faire-part de mariage</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    video, iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #000;
+      object-fit: cover; /* la vidéo remplit l'écran */
+    }
+
+    #pdfSection {
+      display: none;
+    }
+
+    /* Bouton "Passer la vidéo" */
+    #skipVideoBtn {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 10;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #skipVideoBtn:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body>
+  <!-- Écran vidéo -->
+  <div id="videoSection" class="screen">
+    <video id="weddingVideo" controls autoplay playsinline>
+      <source src="video.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la lecture de cette vidéo.
+    </video>
+    <button id="skipVideoBtn">Passer la vidéo</button>
+  </div>
+
+  <!-- Écran PDF -->
+  <div id="pdfSection" class="screen">
+    <iframe id="pdfFrame" src="faire-part.pdf"></iframe>
+  </div>
+
+  <script>
+    const videoSection = document.getElementById('videoSection');
+    const pdfSection = document.getElementById('pdfSection');
+    const weddingVideo = document.getElementById('weddingVideo');
+    const skipVideoBtn = document.getElementById('skipVideoBtn');
+    const pdfFrame = document.getElementById('pdfFrame');
+
+    function showPdf() {
+      videoSection.style.display = 'none';
+      pdfSection.style.display = 'flex';
+      // Recharge le PDF au cas où
+      pdfFrame.src = pdfFrame.src;
+    }
+
+    weddingVideo.addEventListener('ended', showPdf);
+    skipVideoBtn.addEventListener('click', showPdf);
+  </script>
+</body>
+</html>
